@@ -10,7 +10,6 @@ suspend fun getJapaneseRandamQuote(): String {
         try {
             val response = URL("https://zenquotes.io/api/random").readText()
             val json = JSONArray(response)
-
             json.getJSONObject(0).getString("q")
         } catch (e: Exception) {
             "Fall seven times, stand up eight."

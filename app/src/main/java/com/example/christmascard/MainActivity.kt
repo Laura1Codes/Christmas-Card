@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -25,6 +27,7 @@ import com.example.christmascard.ui.theme.ChristmasCardTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +52,7 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(Color(0xFFB85C62))
             .padding(8.dp),
 
         verticalArrangement = Arrangement.Center,
@@ -69,8 +73,10 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(24.dp))
         Text(
             text = japaneseQuote,
-            fontSize = 36.sp,
-            textAlign = TextAlign.Center
+            fontSize = 24.sp,
+            lineHeight = 32.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

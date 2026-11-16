@@ -1,5 +1,6 @@
 package com.example.christmascard
 
+import android.R.attr.rotation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,6 +28,7 @@ import com.example.christmascard.ui.theme.ChristmasCardTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
@@ -59,7 +61,7 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var japaneseQuote by remember {
-            mutableStateOf("Loading a japanese quote")
+            mutableStateOf("")
         }
         LaunchedEffect(Unit) {
             japaneseQuote = getJapaneseRandamQuote()
@@ -71,13 +73,24 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            text = japaneseQuote,
-            fontSize = 24.sp,
-            lineHeight = 32.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (japaneseQuote.isEmpty()) {
+
+            Text(
+                text = "🎅",
+                fontSize = 48.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+        } else {
+            Text(
+                text = japaneseQuote,
+                fontSize = 24.sp,
+                lineHeight = 32.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

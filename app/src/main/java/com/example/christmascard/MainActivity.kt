@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +28,7 @@ import com.example.christmascard.ui.theme.ChristmasCardTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChristmasCardTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ChristmasCardGreeting(
+                    GreetingImage(
                         message = "Merry Christmas!",
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -47,7 +48,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingImage(message: String,modifier: Modifier = Modifier) {
+fun GreetingImage(message: String, modifier: Modifier = Modifier) {
+    val image = painterResource(R.drawable.winter_japan)
+    Box(modifier) {
+        Image(painter = image, contentDescription = "winter Japan Picture")
+        ChristmasCardGreeting(message = message)
+    }
 }
 
 @Composable
@@ -55,25 +61,23 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFB85C62))
             .padding(8.dp),
 
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var japaneseQuote by remember {
-            mutableStateOf("")
-        }
-        LaunchedEffect(Unit) {
-            japaneseQuote = getJapaneseRandamQuote()
-        }
+        var japaneseQuote by remember { mutableStateOf("") }
+        LaunchedEffect(Unit) { japaneseQuote = getJapaneseRandamQuote() }
+
         Text(
             text = message,
             fontSize = 30.sp,
             lineHeight = 36.sp,
             textAlign = TextAlign.Center
         )
+
         Spacer(modifier = Modifier.height(24.dp))
+
         if (japaneseQuote.isEmpty()) {
             Text(
                 text = "🎅",
@@ -98,5 +102,13 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
 fun ChristmasCardGreetingPreview() {
     ChristmasCardTheme {
         ChristmasCardGreeting(message = "Merry Christmas!")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ChristmasCardGreetingImagePreview() {
+    ChristmasCardTheme {
+        GreetingImage(message = "Merry Christmas!")
     }
 }

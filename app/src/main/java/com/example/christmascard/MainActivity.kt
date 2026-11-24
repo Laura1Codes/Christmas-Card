@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
             ChristmasCardTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     GreetingImage(
-                        message = "Merry Christmas!",
+                        message = stringResource(R.string.merry_christmas),
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

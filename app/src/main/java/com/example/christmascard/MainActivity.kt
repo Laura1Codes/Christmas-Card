@@ -8,11 +8,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +27,8 @@ import com.example.christmascard.ui.theme.ChristmasCardTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.BiasAlignment
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 
@@ -50,49 +51,38 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GreetingImage(message: String, modifier: Modifier = Modifier) {
-    val image = painterResource(R.drawable.winter_japan)
-    Box(modifier) {
-        Image(painter = image, contentDescription = "winter Japan Picture")
-        ChristmasCardGreeting(message = message)
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = BiasAlignment(0f, -0.8f)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.winter_japan),
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        ChristmasCardGreeting(message = message, modifier = Modifier.padding(24.dp))
     }
 }
 
 @Composable
 fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp),
+    var japaneseQuote by remember { mutableStateOf("") }
+    LaunchedEffect(Unit) { japaneseQuote = getJapaneseRandamQuote() }
 
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        var japaneseQuote by remember { mutableStateOf("") }
-        LaunchedEffect(Unit) { japaneseQuote = getJapaneseRandamQuote() }
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(text = message, fontSize = 30.sp, textAlign = TextAlign.Center)
 
-        Text(
-            text = message,
-            fontSize = 30.sp,
-            lineHeight = 36.sp,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        if (japaneseQuote.isEmpty()) {
             Text(
-                text = "🎅",
-                fontSize = 48.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
-        } else {
-            Text(
-                text = japaneseQuote,
-                fontSize = 24.sp,
-                lineHeight = 32.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                text = japaneseQuote.ifEmpty { "🎅" },
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center
             )
         }
     }

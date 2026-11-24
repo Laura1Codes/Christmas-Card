@@ -1,6 +1,5 @@
 package com.example.christmascard
 
-import android.R.attr.rotation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +27,6 @@ import com.example.christmascard.ui.theme.ChristmasCardTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
@@ -41,12 +39,15 @@ class MainActivity : ComponentActivity() {
                     ChristmasCardGreeting(
                         message = "Merry Christmas!",
                         modifier = Modifier.padding(innerPadding)
-
                     )
                 }
             }
         }
     }
+}
+
+@Composable
+fun GreetingImage(message: String,modifier: Modifier = Modifier) {
 }
 
 @Composable
@@ -74,14 +75,12 @@ fun ChristmasCardGreeting(message: String, modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(24.dp))
         if (japaneseQuote.isEmpty()) {
-
             Text(
                 text = "🎅",
                 fontSize = 48.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
-
         } else {
             Text(
                 text = japaneseQuote,
